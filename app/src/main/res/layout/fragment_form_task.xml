@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingHorizontal="10dp"
+    >
+
+    <EditText
+            android:id="@+id/etNameTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="@string/name" />
+
+        <EditText
+            android:id="@+id/etDescTask"
+            android:layout_width="match_parent"
+            android:layout_height="303dp"
+            android:layout_below="@id/etNameTask"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:hint="@string/desc"/>
+
+        <EditText
+            android:id="@+id/editTextDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date"
+            android:layout_below="@id/etDescTask"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/editTextTime"
+            android:hint="@string/date"
+            android:layout_toStartOf="@id/editTextTime"
+            android:layout_alignParentStart="true"/>
+
+        <EditText
+            android:id="@+id/editTextTime"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etDescTask"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="0dp"
+            android:ems="10"
+            android:inputType="time"
+            android:hint="@string/time"
+            android:layout_alignParentEnd="true"/>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            android:layout_below="@id/editTextTime"
+            android:layout_toLeftOf="@id/btnCancel"
+            android:layout_toStartOf="@id/btnCancel" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:layout_below="@id/editTextTime"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:layout_below="@id/editTextTime"/>
+
+</RelativeLayout>
