@@ -1,17 +1,25 @@
 package pb.mytudu.modul.listTask;
 
 
+import java.util.List;
+
 import pb.mytudu.base.BasePresenter;
 import pb.mytudu.base.BaseView;
+import pb.mytudu.callback.RequestCallback;
+import pb.mytudu.model.Task;
 
 public interface ListTaskContract {
     interface View extends BaseView<Presenter> {
-//        void redirectToAddTask();
-        void redirectToFormTask(int type, int pos, int id);
+        void startLoading();
+        void endLoading();
+        void showListTask(List<Task> tasks);
+        void showError(String errorMessage);
     }
 
     interface Presenter extends BasePresenter {
-//        void performAddTask();
-        void performFormTask(int type, int pos, int id);
+        void requestListTask();
+    }
+    interface Interactor{
+        void requestListTask(RequestCallback<List<Task>> requestCallback);
     }
 }

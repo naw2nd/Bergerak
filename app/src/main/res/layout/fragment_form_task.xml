@@ -24,54 +24,56 @@
             android:inputType="textMultiLine"
             android:hint="@string/desc"/>
 
-        <EditText
-            android:id="@+id/editTextDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date"
-            android:layout_below="@id/etDescTask"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/editTextTime"
-            android:hint="@string/date"
-            android:layout_toStartOf="@id/editTextTime"
-            android:layout_alignParentStart="true"/>
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDescTask"
+        android:layout_marginTop="67dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_toStartOf="@id/btnCancel"
+        android:layout_toLeftOf="@id/btnCancel"
+        android:text="@string/add" />
 
-        <EditText
-            android:id="@+id/editTextTime"
-            android:layout_width="145dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/etDescTask"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="0dp"
-            android:ems="10"
-            android:inputType="time"
-            android:hint="@string/time"
-            android:layout_alignParentEnd="true"/>
-
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add"
-            android:layout_below="@id/editTextTime"
-            android:layout_toLeftOf="@id/btnCancel"
-            android:layout_toStartOf="@id/btnCancel" />
-
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            android:layout_below="@id/editTextTime"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDescTask"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/cancel" />
 
     <Button
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
-        android:layout_below="@id/editTextTime"/>
+        android:layout_below="@+id/etDescTask"
+        android:layout_marginTop="68dp"
+        android:text="Delete" />
+
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDescTask"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="198dp"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="9dp"
+        android:layout_toEndOf="@+id/cbStatus"
+        android:text="@string/share" />
+
+    <CheckBox
+        android:id="@+id/cbStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDescTask"
+        android:layout_marginTop="6dp"
+        android:text="@string/done" />
 
 </RelativeLayout>

@@ -7,7 +7,6 @@ import pb.mytudu.base.BaseFragmentHolderActivity;
 
 public class ListTaskActivity extends BaseFragmentHolderActivity {
     ListTaskFragment listTaskFragment;
-    private final int UPDATE_REQUEST = 2019;
 
     @Override
     protected void initializeFragment() {

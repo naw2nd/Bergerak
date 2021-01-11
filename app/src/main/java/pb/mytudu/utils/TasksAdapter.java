@@ -28,9 +28,15 @@ public class TasksAdapter extends ArrayAdapter<Task> {
         // Lookup view for data population
         TextView tvTitle = (TextView) convertView.findViewById(R.id.taskTitle);
         TextView tvDesc = (TextView) convertView.findViewById(R.id.taskDetail);
+        TextView tvStatus = (TextView) convertView.findViewById(R.id.taskStatus);
         // Populate the data into the template view using the data object
         tvTitle.setText(task.getTitle());
         tvDesc.setText(task.getDescription());
+        if(task.getStatus().equals("done")){
+            tvStatus.setText("Done");
+        }else{
+            tvStatus.setText("");
+        }
 //        tvDesc.setText(String.valueOf(task.getId()));
         // Return the completed view to render on screen
         return convertView;

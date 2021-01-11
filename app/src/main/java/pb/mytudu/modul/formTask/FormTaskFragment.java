@@ -6,15 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
 import pb.mytudu.R;
 import pb.mytudu.base.BaseFragment;
-import pb.mytudu.model.DB;
 import pb.mytudu.model.Task;
 import pb.mytudu.modul.listTask.ListTaskActivity;
+import pb.mytudu.utils.UtilProvider;
 
 
 public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskContract.Presenter> implements FormTaskContract.View {
@@ -24,33 +25,46 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
     Button btnSave;
     Button btnCancel;
     Button btnDelete;
-    int typeForm;
-    int pos;
+    CheckBox cbStatus;
+    Button btnShare;
+    String formType;
+    Task sharedTask;
     int id;
-    DB db;
 
-    public FormTaskFragment() {
-    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.fragment_form_task, container, false);
-        mPresenter = new FormTaskPresenter(this);
-        mPresenter.start();
 
-        db = DB.getInstance();
+        Intent intent = getActivity().getIntent();
+        id = intent.getIntExtra("id", -1);
+        formType = intent.getStringExtra("formType");
+
+        mPresenter = new FormTaskPresenter(this, new FormTaskInteractor(UtilProvider.getSharedPreferenceUtil()));
+
+
+        mPresenter.start();
 
         etName = fragmentView.findViewById(R.id.etNameTask);
         etDesc = fragmentView.findViewById(R.id.etDescTask);
         btnSave = fragmentView.findViewById(R.id.btnSave);
         btnCancel = fragmentView.findViewById(R.id.btnCancel);
         btnDelete = fragmentView.findViewById(R.id.btnDelete);
+        cbStatus = fragmentView.findViewById(R.id.cbStatus);
+        btnShare = fragmentView.findViewById(R.id.btnShare);
 
-        Intent intent = getActivity().getIntent();
-        id = intent.getIntExtra("id", -1);
-        defineFormType(intent);
+        if(formType.equals("edit")){
+            setTitle("Edit Task");
+            mPresenter.requestTask(id);
+            btnSave.setText("Save");
+        }else {
+            setTitle("Add Task");
+            cbStatus.setVisibility(View.GONE);
+            btnDelete.setVisibility(View.GONE);
+            btnShare.setVisibility(View.GONE);
+        }
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +75,8 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redirectToListTask();
+                getActivity().finish();
+                startActivity(new Intent(getActivity(), ListTaskActivity.class));
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener(){
@@ -70,48 +85,49 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
                 setBtnDeleteClick();
             }
         });
+        btnShare.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                setBtnShareClick();
+            }
+        });
 
         return fragmentView;
     }
 
-    public void defineFormType(Intent intent){
-        typeForm = intent.getIntExtra("formType", 1);
-        pos = intent.getIntExtra("position", -1);
-        if(typeForm == 1){
-            setTitle("Create a New Task");
-            btnDelete.setVisibility(View.GONE);
-        }else{
-            setTitle("Edit this Task");
-            Task task = db.getTaskById(id);
-            etName.setText(task.getTitle());
-            etDesc.setText(task.getDescription());
-            btnSave.setText("Save");
-        }
+    public void setBtnShareClick(){
+        String sharedString = "Task : "+sharedTask.getTitle()+"\nDescription : "+sharedTask.getDescription()+"\nStatus : "+sharedTask.getStatus();
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, sharedString);
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 
     public void setBtnSaveClick(){
         Task task;
         String name = etName.getText().toString();
         String desc = etDesc.getText().toString();
-        if(typeForm == 1){
-            task = new Task(db.getListTask().size(), name, desc);
-            db.getListTask().add(task);
-//            listTask.add(name);
+        String status;
+        if(cbStatus.isChecked()){
+            status = "done";
         }else{
-            task = new Task(id, name, desc);
-            db.setTaskById(id, task);
-//            listTask.set(pos, name);
+            status = "working";
         }
-//        mPresenter.performSaveListTask(listTask);
-        mPresenter.performSaveListTask();
+
+        if(formType.equals("edit")){
+            task = new Task(id, name, desc, status);
+            mPresenter.saveTask(id, task);
+        }else{
+            task = new Task(name, desc, status);
+            mPresenter.addTask(task);
+        }
     }
 
     public void setBtnDeleteClick(){
-        if(typeForm == 2){
-            db.removeById(id);
-//            listTask.remove(pos);
-        }
-        mPresenter.performSaveListTask();
+        mPresenter.deleteTask(id);
     }
 
     @Override
@@ -120,9 +136,29 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
     }
 
     @Override
-    public void redirectToListTask() {
-            Intent intent = new Intent(activity, ListTaskActivity.class);
-            startActivity(intent);
-            activity.finish();
+    public void startLoading() {
+
+    }
+
+    @Override
+    public void endLoading() {
+
+    }
+
+    @Override
+    public void showTask(Task tasks) {
+        sharedTask = tasks;
+        etName.setText(tasks.getTitle());
+        etDesc.setText(tasks.getDescription());
+        if(tasks.getStatus().equals("done")){
+            cbStatus.setChecked(true);
+        }else{
+            cbStatus.setChecked(false);
+        }
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+
     }
 }

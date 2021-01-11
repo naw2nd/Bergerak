@@ -13,6 +13,11 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="edit_task">Edit My Task</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="share">Share</string>
+    <string name="done">Done</string>
+
     <string name="title_activity_main2">MainActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
