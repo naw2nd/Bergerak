@@ -14,6 +14,7 @@
     <string name="save">Save</string>
     <string name="edit_task">Edit My Task</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="register">Register</string>
     <string name="share">Share</string>
     <string name="done">Done</string>

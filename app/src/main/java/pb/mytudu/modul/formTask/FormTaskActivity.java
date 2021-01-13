@@ -1,8 +1,10 @@
 package pb.mytudu.modul.formTask;
 
+import android.content.Intent;
 import android.view.View;
 
 import pb.mytudu.base.BaseFragmentHolderActivity;
+import pb.mytudu.modul.listTask.ListTaskActivity;
 
 
 public class FormTaskActivity extends BaseFragmentHolderActivity {
@@ -13,13 +15,16 @@ public class FormTaskActivity extends BaseFragmentHolderActivity {
     protected void initializeFragment() {
         initializeView();
 
-        btBack.setVisibility(View.VISIBLE);
-        btOptionMenu.setVisibility(View.GONE);
-//        ivIcon.setImageResource(R.drawable.....);
+        btnProfileMenu.setVisibility(View.GONE);
         ivIcon.setVisibility(View.VISIBLE);
 
         formTaskFragment = new FormTaskFragment();
         setCurrentFragment(formTaskFragment, false);
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        startActivity(new Intent(this, ListTaskActivity.class));
+    }
 }

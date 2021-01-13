@@ -61,6 +61,7 @@ public class ListTaskFragment extends BaseFragment<ListTaskActivity, ListTaskCon
                 startActivity(intent);
             }
         });
+
         setTitle("My Task List");
 
         return fragmentView;
