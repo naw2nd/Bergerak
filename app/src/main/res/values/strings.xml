@@ -17,6 +17,9 @@
     <string name="register">Register</string>
     <string name="share">Share</string>
     <string name="done">Done</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
 
     <string name="title_activity_main2">MainActivity</string>
     <!-- Strings used for fragments for navigation -->

@@ -1,39 +1,36 @@
-package pb.mytudu.modul.login;
+package pb.mytudu.modul.register;
 
-
-import android.util.Log;
 
 import pb.mytudu.api_response.AuthResponse;
 import pb.mytudu.callback.RequestCallback;
 
-public class LoginPresenter implements LoginContract.Presenter {
-    private LoginContract.View view;
-    private LoginContract.Interactor interactor;
+public class RegisterPresenter implements RegisterContract.Presenter {
+    private RegisterContract.View view;
+    private RegisterContract.Interactor interactor;
 
-    public LoginPresenter(LoginContract.View view, LoginContract.Interactor interactor){
+    public RegisterPresenter(RegisterContract.View view, RegisterContract.Interactor interactor){
         this.view = view;
         this.interactor = interactor;
     }
 
     @Override
-    public void login(String email, String password) {
+    public void register(String username, String email, String password) {
         view.startLoading();
 
-        interactor.requestLogin(email, password, new RequestCallback<AuthResponse>() {
+        interactor.requestRegister(username, email, password, new RequestCallback<AuthResponse>() {
             @Override
             public void requestSuccess(AuthResponse data) {
                 interactor.saveToken("Bearer "+data.accessToken);
                 interactor.saveUser(email);
-                Log.d("cari cuk", "iki ya mulai");
 
                 view.endLoading();
-                view.loginSuccess();
+                view.registerSuccess();
             }
 
             @Override
             public void requestFailed(String errorMessage) {
                 view.endLoading();
-                view.loginFailed(errorMessage);
+                view.registerFailed(errorMessage);
             }
         });
     }
@@ -41,7 +38,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void start() {
         if (interactor.getToken() != null){
-            view.loginSuccess();
+            view.registerSuccess();
         }
     }
 }

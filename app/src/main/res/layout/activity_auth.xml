@@ -7,32 +7,48 @@
     tools:context=".modul.login.LoginActivity">
 
     <EditText
-        android:id="@+id/etLoginEmail"
+        android:id="@+id/etAuthUsername"
         android:layout_width="286dp"
         android:layout_height="41dp"
         android:ems="10"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/etLoginPassword"
+        android:hint="@string/username"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/rtAuthEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.917" />
+        app:layout_constraintVertical_bias="0.918" />
 
     <EditText
-        android:id="@+id/etLoginPassword"
-        android:layout_width="278dp"
-        android:layout_height="38dp"
+        android:id="@+id/rtAuthEmail"
+        android:layout_width="286dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/etAuthPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.916" />
+
+    <EditText
+        android:id="@+id/etAuthPassword"
+        android:layout_width="286dp"
+        android:layout_height="41dp"
         android:layout_marginBottom="24dp"
         android:ems="10"
+        android:hint="@string/password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btnLoginLogin"
+        app:layout_constraintBottom_toTopOf="@+id/btnAuth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnLoginLogin"
+        android:id="@+id/btnAuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="184dp"
@@ -42,7 +58,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tvLoginRegister"
+        android:id="@+id/tvAuthRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="148dp"

@@ -1,5 +1,8 @@
 package pb.mytudu.modul.formTask;
 
+import android.widget.Toast;
+
+import pb.mytudu.api_response.ResponseMessage;
 import pb.mytudu.callback.RequestCallback;
 import pb.mytudu.model.Task;
 
@@ -53,7 +56,19 @@ public class FormTaskPresenter implements FormTaskContract.Presenter{
     @Override
     public void deleteTask(int id) {
         view.startLoading();
-        interactor.deleteTask(id);
+        interactor.deleteTask(new RequestCallback<ResponseMessage>() {
+            @Override
+            public void requestSuccess(ResponseMessage data) {
+                view.endLoading();
+                view.successDelete();
+            }
+
+            @Override
+            public void requestFailed(String errorMessage) {
+                view.endLoading();
+                view.showError(errorMessage);
+            }
+        }, id);
         view.endLoading();
 
     }

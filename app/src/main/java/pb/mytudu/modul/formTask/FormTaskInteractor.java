@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pb.mytudu.api_response.ResponseMessage;
 import pb.mytudu.callback.RequestCallback;
 import pb.mytudu.model.Task;
 import pb.mytudu.model.User;
@@ -76,26 +77,26 @@ public class FormTaskInteractor implements FormTaskContract.Interactor {
     }
 
     @Override
-    public void deleteTask(int id) {
+    public void deleteTask(RequestCallback<ResponseMessage> requestCallback, int id) {
         AndroidNetworking.delete(Constant.TASK + id)
                 .addHeaders("Authorization", token)
-                .build();
-//                .getAsObject(Task.class, new ParsedRequestListener<Task>() {
-//                    @Override
-//                    public void onResponse(Task response) {
-//                        if(response != null){
-//                            requestCallback.requestSuccess(response);
-//                        }
-//                        else {
-//                            requestCallback.requestFailed("Null Response");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(ANError anError) {
-//                        requestCallback.requestFailed(anError.getMessage());
-//                    }
-//                });
+                .build()
+                .getAsObject(ResponseMessage.class, new ParsedRequestListener<ResponseMessage>() {
+                    @Override
+                    public void onResponse(ResponseMessage response) {
+                        if(response != null){
+                            requestCallback.requestSuccess(response);
+                        }
+                        else {
+                            requestCallback.requestFailed("Null Response");
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        requestCallback.requestFailed(anError.getMessage());
+                    }
+                });
     }
 
     @Override

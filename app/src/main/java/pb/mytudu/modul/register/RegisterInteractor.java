@@ -1,4 +1,4 @@
-package pb.mytudu.modul.login;
+package pb.mytudu.modul.register;
 
 import android.util.Log;
 
@@ -18,22 +18,24 @@ import pb.mytudu.model.User;
 import pb.mytudu.utils.Constant;
 import pb.mytudu.utils.SharedPreferenceUtil;
 
-public class LoginInteractor implements LoginContract.Interactor {
+public class RegisterInteractor implements RegisterContract.Interactor {
     private SharedPreferenceUtil sharedPreferenceUtil;
-    public LoginInteractor(SharedPreferenceUtil sharedPreferenceUtil){
+    public RegisterInteractor(SharedPreferenceUtil sharedPreferenceUtil){
         this.sharedPreferenceUtil = sharedPreferenceUtil;
     }
 
     @Override
-    public void requestLogin(String email, String password, RequestCallback<AuthResponse> responseCallback) {
+    public void requestRegister(String username, String email, String password, RequestCallback<AuthResponse> responseCallback) {
         JSONObject user = new JSONObject();
         try{
+            user.put("username", username);
             user.put("email", email);
             user.put("password", password);
         }catch (JSONException e) {
             e.printStackTrace();
         }
-        AndroidNetworking.post(Constant.LOGIN)
+
+        AndroidNetworking.post(Constant.REGISTER)
                 .addJSONObjectBody(user)
                 .build()
                 .getAsObject(AuthResponse.class, new ParsedRequestListener<AuthResponse>() {
@@ -43,7 +45,6 @@ public class LoginInteractor implements LoginContract.Interactor {
                             responseCallback.requestFailed("null response");
                         }else if(response.accessToken!=null){
                             responseCallback.requestSuccess(response);
-
                         }else {
                             responseCallback.requestFailed("Invalid Credential");
                         }
@@ -54,7 +55,7 @@ public class LoginInteractor implements LoginContract.Interactor {
                         if(anError.getErrorCode() == 406){
                             responseCallback.requestFailed("Invalid Credential");
                         }
-                        responseCallback.requestFailed("Server Offline");
+                        responseCallback.requestFailed("Server Offline "+anError.toString());
                     }
                 });
     }
@@ -77,9 +78,8 @@ public class LoginInteractor implements LoginContract.Interactor {
                     @Override
                     public void onResponse(List<User> response) {
                         if(response != null){
-//                            Log.d("cari", response.get(0).getEmail());
+                            Log.d("cari", response.get(0).getEmail());
                             sharedPreferenceUtil.setUser(new Gson().toJson(response.get(0)));
-                            Log.d("cari cuk", sharedPreferenceUtil.getUser());
                         }
                         else {
                             Log.d("cari", "null response");

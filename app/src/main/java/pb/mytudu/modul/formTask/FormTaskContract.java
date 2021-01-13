@@ -2,6 +2,7 @@ package pb.mytudu.modul.formTask;
 
 import java.util.List;
 
+import pb.mytudu.api_response.ResponseMessage;
 import pb.mytudu.base.BasePresenter;
 import pb.mytudu.base.BaseView;
 import pb.mytudu.callback.RequestCallback;
@@ -14,6 +15,7 @@ public interface FormTaskContract {
         void endLoading();
         void showTask(Task tasks);
         void showError(String errorMessage);
+        void successDelete();
     }
 
     interface Presenter extends BasePresenter {
@@ -25,7 +27,7 @@ public interface FormTaskContract {
     interface Interactor{
         void requestTask(RequestCallback<Task> requestCallback, int id);
         void saveTask(RequestCallback<Task> requestCallback, int id, Task task);
-        void deleteTask(int id);
+        void deleteTask(RequestCallback<ResponseMessage> requestCallback, int id);
         void addTask(RequestCallback<Task> requestCallback, Task task);
     }
 }

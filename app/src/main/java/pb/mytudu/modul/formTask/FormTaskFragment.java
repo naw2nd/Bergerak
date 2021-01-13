@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -160,5 +161,10 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
     @Override
     public void showError(String errorMessage) {
 
+    }
+
+    @Override
+    public void successDelete() {
+        Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
     }
 }
