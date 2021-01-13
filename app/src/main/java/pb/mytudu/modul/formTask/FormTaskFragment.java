@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import java.lang.reflect.Array;
 
 import pb.mytudu.R;
 import pb.mytudu.base.BaseFragment;
@@ -120,9 +123,15 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
         if(formType.equals("edit")){
             task = new Task(id, name, desc, status);
             mPresenter.saveTask(id, task);
+            Toast.makeText(getActivity(), "Task Saved", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+            startActivity(new Intent(getActivity(), ListTaskActivity.class));
         }else{
             task = new Task(name, desc, status);
             mPresenter.addTask(task);
+            Toast.makeText(getActivity(), "Task Added", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+            startActivity(new Intent(getActivity(), ListTaskActivity.class));
         }
     }
 
@@ -160,5 +169,12 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
     @Override
     public void showError(String errorMessage) {
 
+    }
+
+    @Override
+    public void successDelete() {
+        Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+        getActivity().finish();
+        startActivity(new Intent(getActivity(), ListTaskActivity.class));
     }
 }

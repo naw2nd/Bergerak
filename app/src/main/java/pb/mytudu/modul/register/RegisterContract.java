@@ -1,25 +1,24 @@
-package pb.mytudu.modul.login;
+package pb.mytudu.modul.register;
 
 import pb.mytudu.api_response.AuthResponse;
 import pb.mytudu.base.BasePresenter;
 import pb.mytudu.base.BaseView;
 import pb.mytudu.callback.RequestCallback;
 
-public interface LoginContract {
+public interface RegisterContract {
     interface Presenter extends BasePresenter {
-        void login(String email, String password);
+        void register(String username, String email, String password);
     }
 
-    interface View extends BaseView<LoginPresenter> {
+    interface View extends BaseView<RegisterPresenter> {
         void startLoading();
         void endLoading();
-        void loginSuccess();
-        void loginFailed(String message);
-        void redirectToRegister();
+        void registerSuccess();
+        void registerFailed(String message);
     }
 
     interface Interactor {
-        void requestLogin(String email, String password, RequestCallback<AuthResponse> responseCallback);
+        void requestRegister(String username, String email, String password, RequestCallback<AuthResponse> responseCallback);
         void saveToken(String token);
         String getToken();
         void saveUser(String user);

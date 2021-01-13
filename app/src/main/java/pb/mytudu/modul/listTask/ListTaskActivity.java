@@ -1,8 +1,10 @@
 package pb.mytudu.modul.listTask;
 
+import android.content.Intent;
 import android.view.View;
 
 import pb.mytudu.base.BaseFragmentHolderActivity;
+import pb.mytudu.modul.user.ProfileActivity;
 
 
 public class ListTaskActivity extends BaseFragmentHolderActivity {
@@ -12,14 +14,17 @@ public class ListTaskActivity extends BaseFragmentHolderActivity {
     protected void initializeFragment() {
         initializeView();
 
-        btBack.setVisibility(View.GONE);
-        btOptionMenu.setVisibility(View.GONE);
 //        ivIcon.setImageResource(R.drawable.....);
         ivIcon.setVisibility(View.VISIBLE);
 
         listTaskFragment = new ListTaskFragment();
         setCurrentFragment(listTaskFragment, false);
-
+        btnProfileMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            }
+        });
     }
 
 
