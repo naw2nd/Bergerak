@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void loginSuccess() {
-//        this.finish();
+        this.finish();
         startActivity(new Intent(this, ListTaskActivity.class));
 //        SharedPreferenceUtil su = UtilProvider.getSharedPreferenceUtil();
 //        Log.d("cari", su.getToken());

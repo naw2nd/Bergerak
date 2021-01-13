@@ -60,8 +60,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     @Override
     public void registerSuccess() {
-        startActivity(new Intent(this, ListTaskActivity.class));
         this.finish();
+        startActivity(new Intent(this, ListTaskActivity.class));
     }
 
     @Override
