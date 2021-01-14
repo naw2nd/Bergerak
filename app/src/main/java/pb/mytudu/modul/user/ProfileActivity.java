@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import pb.mytudu.R;
+import pb.mytudu.model.User;
 import pb.mytudu.modul.listTask.ListTaskActivity;
 import pb.mytudu.modul.login.LoginActivity;
 import pb.mytudu.modul.register.RegisterActivity;
@@ -29,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
         initUIElements();
         setPresenter(new ProfilePresenter(this, UtilProvider.getSharedPreferenceUtil()));
         presenter.start();
-
+        presenter.getProfile();
     }
 
     private void initUIElements(){
@@ -60,6 +61,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
     public void redirectToLogin() {
         this.finishAffinity();
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    @Override
+    public void showProfile(User user) {
+        tvUsername.setText(user.getUsername());
+        tvEmail.setText(user.getEmail());
     }
 
     @Override

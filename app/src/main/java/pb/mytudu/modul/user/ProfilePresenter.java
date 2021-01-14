@@ -3,8 +3,11 @@ package pb.mytudu.modul.user;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import pb.mytudu.api_response.AuthResponse;
 import pb.mytudu.callback.RequestCallback;
+import pb.mytudu.model.User;
 import pb.mytudu.utils.SharedPreferenceUtil;
 
 public class ProfilePresenter implements ProfileContract.Presenter {
@@ -16,14 +19,20 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
     @Override
     public void start() {
-//        if (sharedPreferenceUtil.getToken() == null){
-//            view.loginSuccess();
-//        }
+        if (sharedPreferenceUtil.getToken() == null){
+            view.redirectToLogin();
+        }
     }
 
     @Override
     public void logout() {
         sharedPreferenceUtil.clear();
         view.redirectToLogin();
+    }
+
+    @Override
+    public void getProfile() {
+        User user = new Gson().fromJson(sharedPreferenceUtil.getUser(), User.class);
+        view.showProfile(user);
     }
 }
