@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     EditText etUsername;
     Button btnRegister;
     TextView tvRegister;
+    ProgressBar progressBar;
     private RegisterPresenter presenter;
 
     @Override
@@ -29,12 +31,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         initUIElements();
         setPresenter(new RegisterPresenter(this, new RegisterInteractor(UtilProvider.getSharedPreferenceUtil())));
         presenter.start();
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.register(etUsername.getText().toString(), etEmail.getText().toString(), etPassword.getText().toString());
-            }
-        });
+
     }
 
     private void initUIElements(){
@@ -43,19 +40,29 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         btnRegister = findViewById(R.id.btnAuth);
         tvRegister = findViewById(R.id.tvAuthRegister);
         etUsername = findViewById(R.id.etAuthUsername);
+        progressBar = findViewById(R.id.pbAuth);
 
         btnRegister.setText("Register");
         tvRegister.setVisibility(View.GONE);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.register(etUsername.getText().toString(), etEmail.getText().toString(), etPassword.getText().toString());
+            }
+        });
     }
 
     @Override
     public void startLoading() {
-
+        progressBar.setVisibility(View.VISIBLE);
+//        Toast.makeText(this, "Please wait", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void endLoading() {
-
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(this, "Register Success", Toast.LENGTH_SHORT).show();
     }
 
     @Override

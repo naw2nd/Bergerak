@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
     TextView tvUsername;
     TextView tvEmail;
     Button btnLogout;
+    ProgressBar progressBar;
     private ProfilePresenter presenter;
 
     @Override
@@ -37,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
         tvUsername = findViewById(R.id.tvProfileUsernameValue);
         tvEmail = findViewById(R.id.tvProfileEmailValue);
         btnLogout = findViewById(R.id.btnProfileLogout);
+        progressBar = findViewById(R.id.pbProfile);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,18 +52,19 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
 
     @Override
     public void startLoading() {
-
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void endLoading() {
-
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void redirectToLogin() {
         this.finishAffinity();
         startActivity(new Intent(this, LoginActivity.class));
+        Toast.makeText(this, "Logout success", Toast.LENGTH_SHORT).show();
     }
 
     @Override

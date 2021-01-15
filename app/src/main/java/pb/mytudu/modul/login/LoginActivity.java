@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     Button btnLogin;
     TextView tvRegister;
     private LoginPresenter presenter;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +34,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         initUIElements();
         setPresenter(new LoginPresenter(this, new LoginInteractor(UtilProvider.getSharedPreferenceUtil())));
         presenter.start();
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.login(etEmail.getText().toString(), etPassword.getText().toString());
-            }
-        });
+
     }
 
     private void initUIElements(){
@@ -46,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         btnLogin = findViewById(R.id.btnAuth);
         tvRegister = findViewById(R.id.tvAuthRegister);
         etUsername = findViewById(R.id.etAuthUsername);
-
+        progressBar = findViewById(R.id.pbAuth);
         etUsername.setVisibility(View.GONE);
 
         tvRegister.setOnClickListener(new View.OnClickListener() {
@@ -55,25 +52,30 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                 redirectToRegister();
             }
         });
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.login(etEmail.getText().toString(), etPassword.getText().toString());
+            }
+        });
     }
 
     @Override
     public void startLoading() {
-
+//        Toast.makeText(this, "Signing in", Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void endLoading() {
-
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loginSuccess() {
         this.finish();
         startActivity(new Intent(this, ListTaskActivity.class));
-//        SharedPreferenceUtil su = UtilProvider.getSharedPreferenceUtil();
-//        Log.d("cari", su.getToken());
-//        Log.d("cari acti", su.getUser());
     }
 
     @Override

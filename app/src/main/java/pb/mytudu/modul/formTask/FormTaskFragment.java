@@ -26,7 +26,6 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
     EditText etName;
     EditText etDesc;
     Button btnSave;
-    Button btnCancel;
     Button btnDelete;
     CheckBox cbStatus;
     Button btnShare;
@@ -34,29 +33,24 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
     Task sharedTask;
     int id;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.fragment_form_task, container, false);
+        initUIElements();
 
+        mPresenter = new FormTaskPresenter(this, new FormTaskInteractor(UtilProvider.getSharedPreferenceUtil()));
+        mPresenter.start();
+        defineFormType();
+
+        return fragmentView;
+    }
+
+    private void defineFormType() {
         Intent intent = getActivity().getIntent();
         id = intent.getIntExtra("id", -1);
         formType = intent.getStringExtra("formType");
-
-        mPresenter = new FormTaskPresenter(this, new FormTaskInteractor(UtilProvider.getSharedPreferenceUtil()));
-
-
-        mPresenter.start();
-
-        etName = fragmentView.findViewById(R.id.etNameTask);
-        etDesc = fragmentView.findViewById(R.id.etDescTask);
-        btnSave = fragmentView.findViewById(R.id.btnSave);
-        btnCancel = fragmentView.findViewById(R.id.btnCancel);
-        btnDelete = fragmentView.findViewById(R.id.btnDelete);
-        cbStatus = fragmentView.findViewById(R.id.cbStatus);
-        btnShare = fragmentView.findViewById(R.id.btnShare);
 
         if(formType.equals("edit")){
             setTitle("Edit Task");
@@ -68,18 +62,20 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
             btnDelete.setVisibility(View.GONE);
             btnShare.setVisibility(View.GONE);
         }
+    }
+
+    private void initUIElements() {
+        etName = fragmentView.findViewById(R.id.etNameTask);
+        etDesc = fragmentView.findViewById(R.id.etDescTask);
+        btnSave = fragmentView.findViewById(R.id.btnSave);
+        btnDelete = fragmentView.findViewById(R.id.btnDelete);
+        cbStatus = fragmentView.findViewById(R.id.cbStatus);
+        btnShare = fragmentView.findViewById(R.id.btnShare);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setBtnSaveClick();
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-                startActivity(new Intent(getActivity(), ListTaskActivity.class));
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener(){
@@ -95,7 +91,6 @@ public class FormTaskFragment extends BaseFragment<FormTaskActivity, FormTaskCon
             }
         });
 
-        return fragmentView;
     }
 
     public void setBtnShareClick(){

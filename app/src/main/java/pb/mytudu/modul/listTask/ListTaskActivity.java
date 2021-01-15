@@ -13,9 +13,7 @@ public class ListTaskActivity extends BaseFragmentHolderActivity {
     @Override
     protected void initializeFragment() {
         initializeView();
-
-//        ivIcon.setImageResource(R.drawable.....);
-        ivIcon.setVisibility(View.VISIBLE);
+        setTitle("My Task List");
 
         listTaskFragment = new ListTaskFragment();
         setCurrentFragment(listTaskFragment, false);

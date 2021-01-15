@@ -21,6 +21,9 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
+    <string name="empty">Task Empty</string>
+    <string name="descApp">MyTudu, Aplikasi Todo List</string>
+    <string name="nameAPP">MyTudu App</string>
 
     <string name="title_activity_main2">MainActivity</string>
     <!-- Strings used for fragments for navigation -->
